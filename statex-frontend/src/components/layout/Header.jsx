@@ -1,38 +1,56 @@
 import { Bell, UserCircle2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function Header() {
 
-  const email = localStorage.getItem("email");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+  });
 
-  const username = email
-    ? email.split("@")[0]
-    : "User";
+  useEffect(() => {
+
+    setUser({
+      name: localStorage.getItem("name") || "User",
+      email: localStorage.getItem("email") || "",
+    });
+
+    // Listen for profile updates
+    const handleProfileUpdate = () => {
+      setUser({
+        name: localStorage.getItem("name") || "User",
+        email: localStorage.getItem("email") || "",
+      });
+    };
+
+    window.addEventListener("profileUpdated", handleProfileUpdate);
+
+    return () =>
+      window.removeEventListener("profileUpdated", handleProfileUpdate);
+
+  }, []);
 
   return (
 
     <header className="sticky top-0 z-20 border-b border-slate-800 bg-slate-900/90 backdrop-blur-xl">
 
-      <div className="h-24 flex items-center justify-between px-10">
+      <div className="flex h-24 items-center justify-between px-10">
 
-        {/* Left Side */}
+        {/* Left */}
 
         <div>
 
           <h1 className="text-4xl font-bold">
-
             Dashboard
-
           </h1>
 
           <p className="mt-1 text-slate-400">
-
-            Welcome back, {username} 
-
+            Welcome back, {user.name}
           </p>
 
         </div>
 
-        {/* Right Side */}
+        {/* Right */}
 
         <div className="flex items-center gap-6">
 
@@ -51,15 +69,11 @@ function Header() {
             <div>
 
               <p className="font-semibold">
-
-                {username}
-
+                {user.name}
               </p>
 
               <p className="text-sm text-slate-400">
-
-                Expense Manager
-
+                {user.email}
               </p>
 
             </div>

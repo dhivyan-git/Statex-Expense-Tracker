@@ -116,17 +116,7 @@ function Login() {
 
                     </label>
 
-                    <button
-
-                        type="button"
-
-                        className="text-blue-400 hover:text-blue-300"
-
-                    >
-
-                        Forgot Password?
-
-                    </button>
+                   
 
                 </div>
 
